@@ -1,9 +1,9 @@
 package org.crackhash.manager.task.impl.data
 
-import org.crackhash.manager.task.api.exception.TaskNotFoundException
+import org.crackhash.manager.task.domain.exception.TaskNotFoundException
 import org.crackhash.manager.task.impl.Task
 import org.crackhash.manager.util.DomainRepository
-import org.crackhash.manager.util.LogAfter
+import org.crackhash.manager.util.logger.LogAfter
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux

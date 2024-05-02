@@ -6,10 +6,10 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
-import org.crackhash.manager.task.api.dto.CreateTaskRequest
-import org.crackhash.manager.task.api.dto.TaskStatus
-import org.crackhash.manager.task.api.event.CompletedSubtaskEvent
-import org.crackhash.manager.task.config.TaskConfigurationProperties
+import org.crackhash.manager.task.domain.dto.CreateTaskRequest
+import org.crackhash.manager.task.domain.dto.TaskStatus
+import org.crackhash.manager.task.domain.event.CompletedSubtaskEvent
+import org.crackhash.manager.task.di.TaskConfigurationProperties
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
@@ -64,7 +64,4 @@ data class Task(
             TaskStatus.IN_PROGRESS -> this.copy(status = TaskStatus.IN_PROGRESS)
             else -> throw IllegalArgumentException("Unknown status $status")
         }
-
-    private fun isExpired(): Boolean =
-        status != TaskStatus.READY && Clock.System.now().minus(duration).toLocalDateTime(TimeZone.UTC) > createTime
 }

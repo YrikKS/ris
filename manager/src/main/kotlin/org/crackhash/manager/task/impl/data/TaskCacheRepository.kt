@@ -2,10 +2,10 @@ package org.crackhash.manager.task.impl.data
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.crackhash.manager.task.config.TaskConfigurationProperties
+import org.crackhash.manager.task.di.TaskConfigurationProperties
 import org.crackhash.manager.task.impl.Task
 import org.crackhash.manager.util.DomainCacheRepository
-import org.crackhash.manager.util.LogAfter
+import org.crackhash.manager.util.logger.LogAfter
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate
 import reactor.core.publisher.Mono
 

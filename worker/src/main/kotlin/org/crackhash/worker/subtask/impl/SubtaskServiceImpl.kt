@@ -3,10 +3,10 @@ package org.crackhash.worker.subtask.impl
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import org.apache.commons.codec.digest.DigestUtils
-import org.crackhash.worker.subtask.api.SubtaskService
-import org.crackhash.worker.subtask.api.event.CompletedSubtaskEvent
-import org.crackhash.worker.subtask.api.event.CreatedTaskEvent
-import org.crackhash.worker.util.LogBefore
+import org.crackhash.worker.subtask.domain.SubtaskService
+import org.crackhash.worker.subtask.domain.event.CompletedSubtaskEvent
+import org.crackhash.worker.subtask.domain.event.CreatedTaskEvent
+import org.crackhash.worker.util.logger.LogBefore
 import org.crackhash.worker.util.Sender
 import org.paukov.combinatorics3.Generator
 import org.springframework.stereotype.Service
@@ -16,6 +16,7 @@ import kotlin.streams.asSequence
 @Service
 class SubtaskServiceImpl(private val sender: Sender) : SubtaskService {
 
+    // Lab 1
     @LogBefore
     override fun runAsync(event: CreatedTaskEvent): Unit = run(event)
 
