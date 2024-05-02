@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.13.0-rc.5-management-alpine
+    container_name: rabbitmq
+    ports: [ "15672:15672", "5672:5672" ]
+
+  mongo-setup:
+    image: mongo:latest
+    container_name: mongo-setup
+    depends_on: [ mongo1, mongo2, mongo3 ]
+    volumes: [ ./rs-init.sh:/scripts/rs-init.sh ]
+    entrypoint: [ bash, /scripts/rs-init.sh ]
+
+  manager:
+    container_name: manager
+    build: ./manager
+    depends_on: [ rabbitmq ]
+    ports: [ "8080:8080" ]
+
+  worker1:
+    container_name: worker1
+    build: ./worker
+    depends_on: [ manager ]
+
+  worker2:
+    container_name: worker2
+    build: ./worker
+    depends_on: [ manager ]
+
+  mongo1:
+    image: mongo:latest
+    container_name: mongo1
+    command: [ "--replSet", "my-replica-set", "--bind_ip_all" ]
+    ports: [ "27017:27017" ]
+
+  mongo2:
+    image: mongo:latest
+    container_name: mongo2
+    command: [ "--replSet", "my-replica-set", "--bind_ip_all" ]
+    ports: [ "27018:27017" ]
+
+  mongo3:
+    image: mongo:latest
+    container_name: mongo3
+    command: [ "--replSet", "my-replica-set", "--bind_ip_all" ]
+    ports: [ "27019:27017" ]
