@@ -6,10 +6,10 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
+import org.crackhash.manager.task.di.TaskConfigurationProperties
 import org.crackhash.manager.task.domain.dto.CreateTaskRequest
 import org.crackhash.manager.task.domain.dto.TaskStatus
 import org.crackhash.manager.task.domain.event.CompletedSubtaskEvent
-import org.crackhash.manager.task.di.TaskConfigurationProperties
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
@@ -48,8 +48,9 @@ data class Task(
     fun update(event: CompletedSubtaskEvent): Task =
         run {
             require(id == event.id) { "Task id=$id not equals request id=${event.id}" }
-            if (partNumbers.contains(event.partNumber)) { this }
-            else {
+            if (partNumbers.contains(event.partNumber)) {
+                this
+            } else {
                 val newPartNumbers = partNumbers + event.partNumber
                 this.copy(
                     words = words + event.words,
@@ -60,7 +61,7 @@ data class Task(
         }
 
     fun updateStatus(status: TaskStatus): Task =
-        when(status) {
+        when (status) {
             TaskStatus.IN_PROGRESS -> this.copy(status = TaskStatus.IN_PROGRESS)
             else -> throw IllegalArgumentException("Unknown status $status")
         }

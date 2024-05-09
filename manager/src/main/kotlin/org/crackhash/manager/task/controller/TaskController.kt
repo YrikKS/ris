@@ -29,7 +29,7 @@ class TaskController(private val service: TaskService) {
 
     private fun handleException(cause: Throwable): ProblemDetail =
         when (cause) {
-            is TaskNotFoundException -> ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, cause.message)
-            else -> ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, cause.message)
+            is TaskNotFoundException -> ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, cause.message.toString())
+            else -> ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, cause.message.toString())
         }
 }
