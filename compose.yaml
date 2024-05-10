@@ -19,15 +19,23 @@ services:
     depends_on: [ rabbitmq ]
     ports: [ "8080:8080" ]
 
-  worker1:
-    container_name: worker1
-    build: ./worker
-    depends_on: [ manager ]
+#  worker1:
+#    container_name: worker1
+#    build: ./worker
+#    depends_on: [ manager ]
+#
+#  worker2:
+#    container_name: worker2
+#    build: ./worker
+#    depends_on: [ manager ]
 
-  worker2:
-    container_name: worker2
+  worker1:
     build: ./worker
+    restart: always
     depends_on: [ manager ]
+    deploy:
+      mode: replicated
+      replicas: 10
 
   mongo1:
     image: mongo:latest

@@ -32,7 +32,7 @@ class SubtaskServiceImpl(private val sender: Sender) : SubtaskService {
             .asSequence()
             .flatMap {
                 Generator.permutation(event.alphabet.split(""))
-                    .withRepetitions(event.maxLength)
+                    .withRepetitions(it)
                     .stream()
                     .asSequence()
             }
